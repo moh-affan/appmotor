@@ -77,12 +77,14 @@
  ***************** YOUR LIBRARIES *****************
  * @property Rest_client $rest_client
  * @property Ion_auth $ion_auth
+ * @property Fuzzy $fuzzy
  ***************** YOUR MODELS *****************
  * @property Ion_auth_model $ion_auth_model
  * @property M_users $m_users
  * @property M_users_groups $m_users_groups
  * @property M_groups $m_groups
  * @property M_motor $m_motor
+ * @property M_variabel $m_variabel
  */
 class CI_Controller
 {

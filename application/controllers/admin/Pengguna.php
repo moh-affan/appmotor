@@ -70,21 +70,35 @@ class Pengguna extends Authenticated_Controller
 			$data = $this->m_users->as_array()->fields('id,username,email,active,first_name,phone')->with_groups()->order_by('id', 'DESC')->get_all();
 		else
 			$data = $this->m_users->as_array()->fields('id,username,email,active,first_name,phone')->with_groups()->order_by('id', 'DESC')->get($id);
+		if ($dt) {
+			$start = @$_GET['start'];
+			$length = @$_GET['length'];
+			$draw = @$_GET['draw'];
+			$search = @$_GET['search']['value'];
+			$data = $this->m_users->limit($length, $start)->fields('id,username,email,active,first_name,phone');
+			if (!empty($search)) {
+				$data = $data->where('username', 'like', $search, true)
+					->where('first_name', 'like', $search, true)
+					->where('phone', 'like', $search, true)
+					->where('email', 'like', $search, true);
+			}
+			$data = $data->with_groups()->order_by('id', 'DESC')->as_array()->get_all();
+			$rowTotal = $this->m_users->count_rows();
+			if (!empty($search)) {
+				$rowTotal = $this->m_users->where('username', 'like', $search, true)
+					->where('first_name', 'like', $search, true)
+					->where('phone', 'like', $search, true)
+					->where('email', 'like', $search, true)->with_groups()->count_rows();
+			}
+			$response = ['draw' => $draw,
+				'recordsTotal' => $rowTotal,
+				'recordsFiltered' => $rowTotal,
+				'data' => $data
+			];
+			$this->render_json($response);
+		}
 		if ($data) {
-			if ($dt) {
-				$start = @$_GET['start'];
-				$length = @$_GET['length'];
-				$draw = @$_GET['draw'];
-				$data = $this->m_users->limit($length, $start)->fields('id,username,email,active,first_name,phone')->with_groups()->order_by('id', 'DESC')->as_array()->get_all();
-				$rowTotal = $this->m_users->count_rows();
-				$response = ['draw' => $draw,
-					'recordsTotal' => $rowTotal,
-					'recordsFiltered' => $rowTotal,
-					'data' => $data
-				];
-				$this->render_json($response);
-			} else
-				$this->render_json($data);
+			$this->render_json($data);
 		} else
 			$this->render_json(['success' => false, 'message' => 'Data yang Anda minta tidak ada']);
 	}
@@ -98,22 +112,31 @@ class Pengguna extends Authenticated_Controller
 			$data = $this->m_groups->as_array()->fields('id,name,description')->order_by('id', 'DESC')->get_all();
 		else
 			$data = $this->m_groups->as_array()->fields('id,name,description')->order_by('id', 'DESC')->get($id);
+		if ($dt) {
+			$start = @$_GET['start'];
+			$length = @$_GET['length'];
+			$draw = @$_GET['draw'];
+			$search = @$_GET['search']['value'];
+			$data = $this->m_groups->limit($length, $start)->fields('id,name,description');
+			if (!empty($search)) {
+				$data = $data->where('name', 'like', $search, true)
+					->where('description', 'like', $search, true);
+			}
+			$data = $data->order_by('id', 'DESC')->as_array()->get_all();
+			$rowTotal = $this->m_groups->count_rows();
+			if (!empty($search)) {
+				$rowTotal = $this->m_groups->where('name', 'like', $search, true)
+					->where('description', 'like', $search, true)->count_rows();
+			}
+			$response = ['draw' => $draw,
+				'recordsTotal' => $rowTotal,
+				'recordsFiltered' => $rowTotal,
+				'data' => $data
+			];
+			$this->render_json($response);
+		}
 		if ($data) {
-			if ($dt) {
-				$start = @$_GET['start'];
-				$length = @$_GET['length'];
-				$draw = @$_GET['draw'];
-				$search = @$_GET['search']['value'];
-				$data = $this->m_groups->limit($length, $start)->fields('id,name,description')->order_by('id', 'DESC')->as_array()->get_all();
-				$rowTotal = $this->m_groups->count_rows();
-				$response = ['draw' => $draw,
-					'recordsTotal' => $rowTotal,
-					'recordsFiltered' => $rowTotal,
-					'data' => $data
-				];
-				$this->render_json($response);
-			} else
-				$this->render_json($data);
+			$this->render_json($data);
 		} else
 			$this->render_json(['success' => false, 'message' => 'Data yang Anda minta tidak ada']);
 	}

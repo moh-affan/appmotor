@@ -12,7 +12,7 @@ class M_motor extends MY_Model
 	{
 		$this->table = 'motor';
 		$this->primary_key = 'id_motor';
-		$this->fillable = ['merek', 'tipe', 'harga', 'tangki', 'kecepatan', 'tipe_transmisi', 'transmisi', 'bagasi', 'berat', 'warna'];
+		$this->fillable = ['merek', 'tipe', 'harga', 'tangki', 'kecepatan', 'tipetransmisi', 'transmisi', 'bagasi', 'berat', 'warna', 'created_by', 'updated_by'];
 		$this->protected = [$this->primary_key];
 		parent::__construct();
 	}

@@ -46,7 +46,7 @@ defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 					</div>
 					<div class="form-group">
 						<label for="bagasi">Kapasitas Bagasi</label>
-						<input id="bagasi" max="20" class="form-control" name="bagasi" type="number" step="0.1">
+						<input id="bagasi" max="50" class="form-control" name="bagasi" type="number" step="0.1">
 						<span class="input-helper text-muted text-small"><sup>*)</sup>Dalam Liter</span>
 					</div>
 					<div class="form-group">
@@ -160,7 +160,7 @@ defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 					</div>
 					<div class="form-group">
 						<label for="e_bagasi">Kapasitas Bagasi</label>
-						<input id="e_bagasi" max="20" class="form-control" name="bagasi" type="number" step="0.1">
+						<input id="e_bagasi" max="50" class="form-control" name="bagasi" type="number" step="0.1">
 						<span class="input-helper text-muted text-small"><sup>*)</sup>Dalam Liter</span>
 					</div>
 					<div class="form-group">

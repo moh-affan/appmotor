@@ -22,7 +22,7 @@ if ($ci->ion_auth->is_admin()):
 						<ul class="submenu-item">
 							<li class="nav-item motor"><a class="nav-link" href="<?= site_url('admin/master/motor') ?>">Sepeda
 									Motor</a></li>
-							<li class="nav-item kriteria"><a class="nav-link" href="<?= site_url('admin/master/kriteria') ?>">Kriteria</a>
+							<li class="nav-item variabel"><a class="nav-link" href="<?= site_url('admin/master/variabel') ?>">Variabel</a>
 							</li>
 						</ul>
 					</div>
