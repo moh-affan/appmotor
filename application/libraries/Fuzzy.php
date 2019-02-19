@@ -166,10 +166,14 @@ class Fuzzy
 						if ($res == 0)
 							$exclude = true;
 					} else {
-						array_push($this->_defuzzed[$datum->$primary][$him], $res);
+						if ($res > 0.0 || $res < 1.0)
+							array_push($this->_defuzzed[$datum->$primary][$him], $res);
 					}
 				}
 			}
+			$this->_defuzzed[$datum->$primary]['min']['min'] = min($this->_defuzzed[$datum->$primary]['min']);
+			$this->_defuzzed[$datum->$primary]['mid']['min'] = min($this->_defuzzed[$datum->$primary]['mid']);
+			$this->_defuzzed[$datum->$primary]['max']['min'] = min($this->_defuzzed[$datum->$primary]['max']);
 //			if (!$exclude) {
 //				$this->_defuzzed[$datum->$primary] = $tmp2;
 //			}
