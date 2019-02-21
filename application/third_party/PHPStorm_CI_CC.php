@@ -86,6 +86,7 @@
  * @property M_motor $m_motor
  * @property M_variabel $m_variabel
  * @property M_rule $m_rule
+ * @property M_log_rek $m_log_rek
  */
 class CI_Controller
 {

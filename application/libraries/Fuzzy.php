@@ -109,6 +109,7 @@ class Fuzzy
 	public function tahani($kriteria = array(), $data = array())
 	{
 		$this->_reset_fire_strength();
+		$firestength = array();
 		$chr = 'a';
 		foreach ($data as $datum) {
 			$tmp = array();
@@ -130,14 +131,18 @@ class Fuzzy
 				$f = array_filter($f, function ($k) {
 					return $k != 0 && $k != 1;
 				});
-				if (empty($f))
-					$f[0] = 0;
-				$min_fire_strength = min($f);
-				$datum->fire_strength = $min_fire_strength;
-				$key = $min_fire_strength . "_" . $chr++;
-				$this->_fire_strength[$key] = json_decode(json_encode(array_merge((array)$datum, $tmp)));
+//				if (empty($f))
+//					$f[0] = 5;
+				if (!empty($f)) {
+					$min_fire_strength = min($f);
+					$datum->fire_strength = $min_fire_strength;
+					$key = $min_fire_strength . "_" . $chr++;
+					$firestength[$key] = json_decode(json_encode(array_merge((array)$datum, $tmp)));
+				}
 			}
 		}
+		krsort($firestength);
+		$this->_fire_strength = $firestength;
 	}
 
 	public function get_fire_strength()
@@ -233,7 +238,7 @@ class Fuzzy
 		$this->_defuzzed = $defuzzed;
 	}
 
-	public function tsukamoto2($kriteria = array(), $data = array(), $primary = 'id')
+	public function tsukamoto2($kriteria = array(), $data = array(), $primary = 'id', $exclude = array())
 	{
 		//fuzzyfikasi
 		$fuzzy = array();
@@ -261,8 +266,6 @@ class Fuzzy
 		}
 		$rl['nilai'] = 3;
 		$rules = array($rl);
-//		var_dump($this->_rules);
-//		var_dump($k);
 		foreach ($data as $datum) {
 			foreach ($rules as $rule) {
 				$state = [];
@@ -278,10 +281,10 @@ class Fuzzy
 							$n = 'mid';
 						$state['nilai'] = $n;
 						if ($n != 'mid')
-							$state['range'] = explode(':', $this->_variables['harga'][$n]);
+							$state['range'] = explode(':', $this->_variables['tangki'][$n]);
 						else {
-							$low = explode(':', $this->_variables['harga']['min']);
-							$hi = explode(':', $this->_variables['harga']['max']);
+							$low = explode(':', $this->_variables['tangki']['min']);
+							$hi = explode(':', $this->_variables['tangki']['max']);
 							$state['range'] = [$low[0], $hi[1]];
 						}
 
@@ -330,7 +333,17 @@ class Fuzzy
 			return $k != 0;
 		});
 		asort($f_defuzzed);
-		$this->_defuzzed = $f_defuzzed;
+		$x_defuzzed = array();
+		foreach ($f_defuzzed as $id => $defuzz) {
+			if (isset($data->{$id})) {
+				$motor = $data->{$id};
+				$motor->defuzzed = $defuzz;
+				$inc = strpos(strtolower(serialize($motor)), $exclude[0][1]) && strpos(strtolower(serialize($motor)), $exclude[1][1]) && strpos(strtolower(serialize($motor)), $exclude[2][1]);
+				if ($inc)
+					$x_defuzzed[] = $motor;
+			}
+		}
+		$this->_defuzzed = $x_defuzzed;
 	}
 
 	private function calculateDefuzzification($inference)
