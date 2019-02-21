@@ -15,6 +15,7 @@ class Fuzzy
 	private $_fire_strength = array();
 	private $_defuzzed = array();
 	private $_alpha = array();
+	private $_rules = array();
 
 	/**
 	 * Fuzzy constructor.
@@ -22,6 +23,7 @@ class Fuzzy
 	public function __construct()
 	{
 		$this->_initialize_variable();
+		$this->_initialize_rules();
 	}
 
 	/**
@@ -128,6 +130,8 @@ class Fuzzy
 				$f = array_filter($f, function ($k) {
 					return $k != 0 && $k != 1;
 				});
+				if (empty($f))
+					$f[0] = 0;
 				$min_fire_strength = min($f);
 				$datum->fire_strength = $min_fire_strength;
 				$key = $min_fire_strength . "_" . $chr++;
@@ -143,54 +147,216 @@ class Fuzzy
 
 	public function tsukamoto($kriteria = array(), $data = array(), $primary = 'id')
 	{
-		$this->_reset_fire_strength();
-		$this->_reset_defuzzed();
-		$this->_alpha = array();
+		//fuzzyfikasi
+		$fuzzy = array();
 		foreach ($data as $datum) {
-			$this->_defuzzed[$datum->$primary]['min'] = array();
-			$this->_defuzzed[$datum->$primary]['mid'] = array();
-			$this->_defuzzed[$datum->$primary]['max'] = array();
-			$tmp = array();
-			$exclude = false;
 			foreach ($kriteria as $k) {
 				$field = array_pad(explode('_', $k), 2, '');
-				$c = $field[1];
 				$field = $field[0];
 				$himpunan = ['min', 'mid', 'max'];
-				$tmp2 = array();
 				foreach ($himpunan as $him) {
 					$field_himpunan = $field . '_' . $him;
 					$res = $this->$field_himpunan($datum->$field);
-					if ($res == -1) {
-						$res = strpos(' ' . strtolower($datum->$field), strtolower($c)) > 0 ? 1 : 0;
-						if ($res == 0)
-							$exclude = true;
-					} else {
-						if ($res > 0.0 || $res < 1.0)
-							array_push($this->_defuzzed[$datum->$primary][$him], $res);
+					if ($res != -1) {
+						$fuzzy[$datum->$primary][$field][$him] = $res;
 					}
 				}
 			}
-			$this->_defuzzed[$datum->$primary]['min']['min'] = min($this->_defuzzed[$datum->$primary]['min']);
-			$this->_defuzzed[$datum->$primary]['mid']['min'] = min($this->_defuzzed[$datum->$primary]['mid']);
-			$this->_defuzzed[$datum->$primary]['max']['min'] = min($this->_defuzzed[$datum->$primary]['max']);
-//			if (!$exclude) {
-//				$this->_defuzzed[$datum->$primary] = $tmp2;
-//			}
+		}
+
+		//inferensi
+		$inference = array();
+		foreach ($data as $datum) {
+			foreach ($this->_rules as $rule) {
+				$state = [];
+				foreach ($rule as $k => $v) {
+					if ($k != 'nilai') {
+						$a = $fuzzy[$datum->$primary][$k][$v];
+						$state[] = $a;
+					} else {
+						$n = 'max';
+						if ($v == 1)
+							$n = 'min';
+						elseif ($v == 2)
+							$n = 'mid';
+						$state['nilai'] = $n;
+						if ($n != 'mid')
+							$state['range'] = explode(':', $this->_variables['harga'][$n]);
+						else {
+							$low = explode(':', $this->_variables['harga']['min']);
+							$hi = explode(':', $this->_variables['harga']['max']);
+							$state['range'] = [$low[0], $hi[1]];
+						}
+
+					}
+				}
+				$infer = new stdClass();
+				$alpha = min($state[0], $state[1], $state[2], $state[3], $state[4]);
+				$infer->alpha = $alpha;
+				$state['min'] = $alpha;
+				$min = $state['range'][0];
+				$max = $state['range'][1];
+				$state_range = $state['nilai'];
+				switch ($state_range) {
+					case 'min':
+						$z = $max - $alpha * ($max - $min);
+						$infer->z = $z;
+						$inference[$datum->$primary][] = $infer;
+						break;
+					case 'mid':
+						$middle = ($max - $min) / 2 + $min;
+						$z = $alpha * ($middle - $min) + $min;
+						$infer->z = $z;
+						$infer2 = clone $infer;
+						$t2 = $max - $alpha * ($max - $middle);
+						$infer2->z = $t2;
+						$inference[$datum->$primary][] = $infer;
+						$inference[$datum->$primary][] = $infer2;
+						break;
+					case 'max':
+						$t = $alpha * ($max - $min) + $min;
+						$infer->z = $t;
+						$inference[$datum->$primary][] = $infer;
+						break;
+					default:
+						echo 'range state invalid';
+				}
+			}
+		}
+
+		//defuzzifikasi
+		$defuzzed = array();
+		foreach ($inference as $k => $infers) {
+			$defuzzed[$k] = $this->calculateDefuzzification($infers);
+		}
+		asort($defuzzed);
+		$this->_defuzzed = $defuzzed;
+	}
+
+	public function tsukamoto2($kriteria = array(), $data = array(), $primary = 'id')
+	{
+		//fuzzyfikasi
+		$fuzzy = array();
+		foreach ($data as $datum) {
+			foreach ($kriteria as $k) {
+				$field = array_pad(explode('_', $k), 2, '');
+				$field = $field[0];
+				$himpunan = ['min', 'mid', 'max'];
+				foreach ($himpunan as $him) {
+					$field_himpunan = $field . '_' . $him;
+					$res = $this->$field_himpunan($datum->$field);
+					if ($res != -1) {
+						$fuzzy[$datum->$primary][$field][$him] = $res;
+					}
+				}
+			}
+		}
+
+		//inferensi
+		$inference = array();
+		$rl = array();
+		foreach ($kriteria as $ker) {
+			$x = explode('_', $ker);
+			$rl[$x[0]] = $x[1];
+		}
+		$rl['nilai'] = 3;
+		$rules = array($rl);
+//		var_dump($this->_rules);
+//		var_dump($k);
+		foreach ($data as $datum) {
+			foreach ($rules as $rule) {
+				$state = [];
+				foreach ($rule as $k => $v) {
+					if ($k != 'nilai') {
+						$a = $fuzzy[$datum->$primary][$k][$v];
+						$state[] = $a;
+					} else {
+						$n = 'max';
+						if ($v == 1)
+							$n = 'min';
+						elseif ($v == 2)
+							$n = 'mid';
+						$state['nilai'] = $n;
+						if ($n != 'mid')
+							$state['range'] = explode(':', $this->_variables['harga'][$n]);
+						else {
+							$low = explode(':', $this->_variables['harga']['min']);
+							$hi = explode(':', $this->_variables['harga']['max']);
+							$state['range'] = [$low[0], $hi[1]];
+						}
+
+					}
+				}
+				$infer = new stdClass();
+				$alpha = min($state[0], $state[1], $state[2], $state[3], $state[4]);
+				$infer->alpha = $alpha;
+				$state['min'] = $alpha;
+				$min = $state['range'][0];
+				$max = $state['range'][1];
+				$state_range = $state['nilai'];
+				switch ($state_range) {
+					case 'min':
+						$z = $max - $alpha * ($max - $min);
+						$infer->z = $z;
+						$inference[$datum->$primary][] = $infer;
+						break;
+					case 'mid':
+						$middle = ($max - $min) / 2 + $min;
+						$z = $alpha * ($middle - $min) + $min;
+						$infer->z = $z;
+						$infer2 = clone $infer;
+						$t2 = $max - $alpha * ($max - $middle);
+						$infer2->z = $t2;
+						$inference[$datum->$primary][] = $infer;
+						$inference[$datum->$primary][] = $infer2;
+						break;
+					case 'max':
+						$t = $alpha * ($max - $min) + $min;
+						$infer->z = $t;
+						$inference[$datum->$primary][] = $infer;
+						break;
+					default:
+						echo 'range state invalid';
+				}
+			}
+		}
+
+		//defuzzifikasi
+		$defuzzed = array();
+		foreach ($inference as $k => $infers) {
+			$defuzzed[$k] = $this->calculateDefuzzification($infers);
+		}
+		$f_defuzzed = array_filter($defuzzed, function ($k) {
+			return $k != 0;
+		});
+		asort($f_defuzzed);
+		$this->_defuzzed = $f_defuzzed;
+	}
+
+	private function calculateDefuzzification($inference)
+	{
+		$side_up = 0;
+		$side_down = 0;
+		foreach ($inference as $infer) {
+			$side_up += $infer->alpha * $infer->z;
+			$side_down += $infer->alpha;
+		}
+		if ($side_down == 0)
+			return 0;
+		return $side_up / $side_down;
+	}
+
+	private function _initialize_rules()
+	{
+		$this->_ci()->load->model('m_rule');
+		$m_rule = $this->_ci()->m_rule;
+		foreach ($m_rule->get_all() as $var) {
+			$this->_rules[] = ['harga' => $var->harga, 'tangki' => $var->tangki, 'kecepatan' => $var->kecepatan, 'bagasi' => $var->bagasi, 'berat' => $var->berat, 'nilai' => $var->nilai];
 		}
 	}
 
 	public function get_defuzzed()
 	{
-		print_r($this->_defuzzed);
 		return $this->_defuzzed;
-	}
-
-	private function sum($array = array())
-	{
-		$res = 0;
-		foreach ($array as $k => $v)
-			$res += $v;
-		return $res;
 	}
 }

@@ -85,6 +85,7 @@
  * @property M_groups $m_groups
  * @property M_motor $m_motor
  * @property M_variabel $m_variabel
+ * @property M_rule $m_rule
  */
 class CI_Controller
 {

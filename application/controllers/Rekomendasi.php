@@ -29,9 +29,19 @@ class Rekomendasi extends Member_Controller
 		$this->fuzzy->tsukamoto(array_values($this->input->post()), $data, 'id_motor');
 		$this->benchmark->mark('tsukamoto_end');
 		var_dump($this->benchmark->elapsed_time('tsukamoto_start', 'tsukamoto_end'));
-		var_dump($this->fuzzy->get_defuzzed());
+		var_dump($this->fuzzy->get_rules());
 		$this->add_inline_script($this->load->view('cloudui/hasil_js', ['judul_laporan' => 'Hasil Rekomendasi'], true));
 		$this->title('Hasil Rekomendasi')->menu_active('rekomendasi')->layout('cloudui')->view('cloudui/hasil_rekomendasi')->render();
+	}
+
+	public function rules_check()
+	{
+		$this->load->library('fuzzy');
+		$this->load->model('m_motor');
+		$data = $this->m_motor->get_all();
+		$this->fuzzy->tsukamoto2(['harga_min', 'tangki_min', 'kecepatan_min', 'bagasi_min', 'berat_max'], $data, 'id_motor');
+		$defuzzed = $this->fuzzy->get_defuzzed();
+		var_dump($defuzzed);
 	}
 
 	private function _load_ext_datatable()
