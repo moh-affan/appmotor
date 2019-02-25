@@ -3,10 +3,28 @@ defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <div class="row">
 	<div class="col-md-12 grid-margin stretch-card">
 		<div class="card">
-			<div class="card-body">
-				<div class="alert alert-fill-success" role="alert">
-					<i class="icon-exclamation"></i>
-					SELAMAT DATANG <?= get_instance()->session->userdata('name'); ?>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card-body">
+						<h4 class="card-title">Data Pengunjung Aplikasi</h4>
+						<div class="row">
+							<div class="col-12 table-responsive">
+								<table id="order-listing" class="datatable table">
+									<thead>
+									<tr>
+										<th>#</th>
+										<th>Merek</th>
+										<th>Tipe</th>
+										<th>Metode</th>
+										<th>Nilai</th>
+										<th>Urutan</th>
+									</tr>
+									</thead>
+									<tbody></tbody>
+								</table>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

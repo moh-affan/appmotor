@@ -87,6 +87,7 @@
  * @property M_variabel $m_variabel
  * @property M_rule $m_rule
  * @property M_log_rek $m_log_rek
+ * @property M_vw_log_pengunjung $m_vw_log_pengunjung
  */
 class CI_Controller
 {

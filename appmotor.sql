@@ -11,7 +11,7 @@
  Target Server Version : 100137
  File Encoding         : 65001
 
- Date: 21/02/2019 19:42:25
+ Date: 25/02/2019 10:14:57
 */
 
 SET NAMES utf8mb4;
@@ -74,8 +74,8 @@ CREATE TABLE `auth_users`  (
 -- ----------------------------
 -- Records of auth_users
 -- ----------------------------
-INSERT INTO `auth_users` VALUES (1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, NULL, 1268889823, 1550373351, 1, 'Admin', '', '', '085258434274');
-INSERT INTO `auth_users` VALUES (3, '127.0.0.1', 'desy1234', '$2y$08$z.y7uYQk1EhFNhS1CuBwTOWdMRU6Hijf69EIs6wqlen0wiEpPpk5C', NULL, 'desy@app.com', NULL, NULL, NULL, NULL, 1550121815, 1550714507, 1, 'Desy', '', '', '081939432238');
+INSERT INTO `auth_users` VALUES (1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, NULL, 1268889823, 1551064345, 1, 'Admin', '', '', '085258434274');
+INSERT INTO `auth_users` VALUES (3, '127.0.0.1', 'desy1234', '$2y$08$z.y7uYQk1EhFNhS1CuBwTOWdMRU6Hijf69EIs6wqlen0wiEpPpk5C', NULL, 'desy@app.com', NULL, NULL, NULL, NULL, 1550121815, 1551064151, 1, 'Desy', '', '', '081939432238');
 
 -- ----------------------------
 -- Table structure for auth_users_groups
@@ -115,17 +115,35 @@ CREATE TABLE `log_rek`  (
   `updated_at` datetime(0) NULL DEFAULT NULL,
   `updated_by` int(11) NULL DEFAULT NULL,
   PRIMARY KEY (`id_log`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of log_rek
 -- ----------------------------
-INSERT INTO `log_rek` VALUES (1, 11, 'tahani', '0.68469879518072', 1, '2019-02-21 13:41:12', 3, NULL, NULL);
-INSERT INTO `log_rek` VALUES (2, 7, 'tahani', '0.49530120481928', 0, '2019-02-21 13:41:12', 3, NULL, NULL);
-INSERT INTO `log_rek` VALUES (3, 4, 'tahani', '0.49530120481928', 0, '2019-02-21 13:41:12', 3, NULL, NULL);
-INSERT INTO `log_rek` VALUES (4, 3, 'tahani', '0.49530120481928', 0, '2019-02-21 13:41:12', 3, NULL, NULL);
-INSERT INTO `log_rek` VALUES (5, 36, 'tahani', '0.20289156626506', 0, '2019-02-21 13:41:12', 3, NULL, NULL);
-INSERT INTO `log_rek` VALUES (6, 7, 'tsukamoto', '9.6875', 0, '2019-02-21 13:41:13', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (1, 57, 'tahani', '0.75', 0, '2019-02-25 04:09:51', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (2, 52, 'tahani', '0.67857142857143', 1, '2019-02-25 04:09:51', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (3, 59, 'tahani', '0.19375', 2, '2019-02-25 04:09:51', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (4, 60, 'tahani', '0.14791666666667', 3, '2019-02-25 04:09:51', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (5, 62, 'tahani', '0.92857142857143', 0, '2019-02-25 04:10:29', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (6, 64, 'tahani', '0.54545454545455', 1, '2019-02-25 04:10:29', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (7, 66, 'tahani', '0.36363636363636', 2, '2019-02-25 04:10:29', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (8, 27, 'tahani', '0.83333333333333', 0, '2019-02-25 04:10:54', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (9, 26, 'tahani', '0.83333333333333', 1, '2019-02-25 04:10:54', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (10, 25, 'tahani', '0.83333333333333', 2, '2019-02-25 04:10:54', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (11, 24, 'tahani', '0.83333333333333', 3, '2019-02-25 04:10:54', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (12, 19, 'tahani', '0.76785714285714', 4, '2019-02-25 04:10:54', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (13, 64, 'tahani', '0.19518072289157', 0, '2019-02-25 04:11:41', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (14, 62, 'tahani', '0.19277108433735', 1, '2019-02-25 04:11:41', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (15, 66, 'tahani', '0.13253012048193', 2, '2019-02-25 04:11:42', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (16, 9, 'tahani', '0.25', 0, '2019-02-25 04:11:53', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (17, 10, 'tahani', '0.23214285714286', 1, '2019-02-25 04:11:53', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (18, 50, 'tahani', '0.20289156626506', 2, '2019-02-25 04:11:53', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (19, 37, 'tahani', '0.20289156626506', 3, '2019-02-25 04:11:53', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (20, 36, 'tahani', '0.20289156626506', 4, '2019-02-25 04:11:53', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (21, 9, 'tsukamoto', '9.5892857142857', 0, '2019-02-25 04:11:53', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (22, 33, 'tsukamoto', '9.7951807228916', 1, '2019-02-25 04:11:53', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (23, 2, 'tsukamoto', '9.8839285714286', 2, '2019-02-25 04:11:53', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (24, 10, 'tsukamoto', '10.375', 3, '2019-02-25 04:11:53', 3, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for motor
@@ -512,5 +530,11 @@ INSERT INTO `variabel` VALUES (2, 'Kapasitas Tangki', '4:9', '9:14.5', 'motor', 
 INSERT INTO `variabel` VALUES (3, 'Kecepatan Mesin', '83:166', '166:250', 'motor', 'kecepatan', '2019-02-17 02:43:08', 1, NULL, NULL);
 INSERT INTO `variabel` VALUES (4, 'Kapasitas Bagasi', '8.3:16.6', '16.6:25', 'motor', 'bagasi', '2019-02-17 02:44:06', 1, NULL, NULL);
 INSERT INTO `variabel` VALUES (5, 'Berat', '56:112', '112:168', 'motor', 'berat', '2019-02-17 02:44:59', 1, NULL, NULL);
+
+-- ----------------------------
+-- View structure for vw_log_pengunjung
+-- ----------------------------
+DROP VIEW IF EXISTS `vw_log_pengunjung`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vw_log_pengunjung` AS SELECT l.id_log, l.metode, l.nilai, l.urutan, m.merek, m.tipe, CONCAT(u.first_name,' | ',u.email) as pengguna FROM (log_rek l INNER JOIN motor m ON l.motor_id = m.id_motor) INNER JOIN auth_users u ON l.created_by = u.id ;
 
 SET FOREIGN_KEY_CHECKS = 1;

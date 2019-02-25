@@ -51,13 +51,13 @@ class Rekomendasi extends Member_Controller
 		$counter = 0;
 		foreach ($firestrength as $k => $fs) {
 			if ($counter == 5) break;
-			$this->m_log_rek->insert(['motor_id' => $fs->id_motor, 'metode' => 'tahani', 'nilai' => $fs->fire_strength, 'urutan' => $k, 'created_by' => $this->ion_auth->get_user_id()]);
+			$this->m_log_rek->insert(['motor_id' => $fs->id_motor, 'metode' => 'tahani', 'nilai' => $fs->fire_strength, 'urutan' => $counter, 'created_by' => $this->ion_auth->get_user_id()]);
 			$counter++;
 		}
 		$counter = 0;
 		foreach ($defuzzed as $k => $fs) {
 			if ($counter == 5) break;
-			$this->m_log_rek->insert(['motor_id' => $fs->id_motor, 'metode' => 'tsukamoto', 'nilai' => $fs->defuzzed, 'urutan' => $k, 'created_by' => $this->ion_auth->get_user_id()]);
+			$this->m_log_rek->insert(['motor_id' => $fs->id_motor, 'metode' => 'tsukamoto', 'nilai' => $fs->defuzzed, 'urutan' => $counter, 'created_by' => $this->ion_auth->get_user_id()]);
 			$counter++;
 		}
 		$this->add_inline_script($this->load->view('cloudui/hasil_js', ['judul_laporan' => 'Hasil Rekomendasi'], true));
