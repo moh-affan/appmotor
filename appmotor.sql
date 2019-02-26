@@ -11,7 +11,7 @@
  Target Server Version : 100137
  File Encoding         : 65001
 
- Date: 25/02/2019 10:14:57
+ Date: 26/02/2019 23:03:52
 */
 
 SET NAMES utf8mb4;
@@ -44,7 +44,7 @@ CREATE TABLE `auth_login_attempts`  (
   `login` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `time` int(11) UNSIGNED NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for auth_users
@@ -69,13 +69,14 @@ CREATE TABLE `auth_users`  (
   `company` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `phone` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of auth_users
 -- ----------------------------
-INSERT INTO `auth_users` VALUES (1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, NULL, 1268889823, 1551064345, 1, 'Admin', '', '', '085258434274');
-INSERT INTO `auth_users` VALUES (3, '127.0.0.1', 'desy1234', '$2y$08$z.y7uYQk1EhFNhS1CuBwTOWdMRU6Hijf69EIs6wqlen0wiEpPpk5C', NULL, 'desy@app.com', NULL, NULL, NULL, NULL, 1550121815, 1551064151, 1, 'Desy', '', '', '081939432238');
+INSERT INTO `auth_users` VALUES (1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, NULL, 1268889823, 1551196552, 1, 'Admin', '', '', '085258434274');
+INSERT INTO `auth_users` VALUES (3, '127.0.0.1', 'desy1234', '$2y$08$z.y7uYQk1EhFNhS1CuBwTOWdMRU6Hijf69EIs6wqlen0wiEpPpk5C', NULL, 'desy@app.com', NULL, NULL, NULL, NULL, 1550121815, 1551159325, 1, 'Desy', '', '', '081939432238');
+INSERT INTO `auth_users` VALUES (4, '127.0.0.1', 'b4affan', '$2y$08$aFkyDqIRn/jxA0Tal1l9Q.q/IjKFVw5dhAUAHCsAMCv/UcnnfjQyi', NULL, 'b4affan@gmail.com', NULL, NULL, NULL, NULL, 1551195888, 1551196039, 1, 'Moh. Affan', '', '', '085258434274');
 
 -- ----------------------------
 -- Table structure for auth_users_groups
@@ -91,7 +92,7 @@ CREATE TABLE `auth_users_groups`  (
   INDEX `fk_users_groups_groups1_idx`(`group_id`) USING BTREE,
   CONSTRAINT `auth_users_groups_ibfk_1` FOREIGN KEY (`group_id`) REFERENCES `auth_groups` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `auth_users_groups_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `auth_users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE = InnoDB AUTO_INCREMENT = 31 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 32 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of auth_users_groups
@@ -99,6 +100,7 @@ CREATE TABLE `auth_users_groups`  (
 INSERT INTO `auth_users_groups` VALUES (18, 1, 1);
 INSERT INTO `auth_users_groups` VALUES (19, 1, 2);
 INSERT INTO `auth_users_groups` VALUES (30, 3, 2);
+INSERT INTO `auth_users_groups` VALUES (31, 4, 2);
 
 -- ----------------------------
 -- Table structure for log_rek
@@ -110,40 +112,44 @@ CREATE TABLE `log_rek`  (
   `metode` varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `nilai` varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `urutan` int(11) NOT NULL,
+  `exec_time` float NOT NULL,
+  `sesi` varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `created_at` datetime(0) NULL DEFAULT NULL,
   `created_by` int(11) NULL DEFAULT NULL,
   `updated_at` datetime(0) NULL DEFAULT NULL,
   `updated_by` int(11) NULL DEFAULT NULL,
   PRIMARY KEY (`id_log`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 27 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of log_rek
 -- ----------------------------
-INSERT INTO `log_rek` VALUES (1, 57, 'tahani', '0.75', 0, '2019-02-25 04:09:51', 3, NULL, NULL);
-INSERT INTO `log_rek` VALUES (2, 52, 'tahani', '0.67857142857143', 1, '2019-02-25 04:09:51', 3, NULL, NULL);
-INSERT INTO `log_rek` VALUES (3, 59, 'tahani', '0.19375', 2, '2019-02-25 04:09:51', 3, NULL, NULL);
-INSERT INTO `log_rek` VALUES (4, 60, 'tahani', '0.14791666666667', 3, '2019-02-25 04:09:51', 3, NULL, NULL);
-INSERT INTO `log_rek` VALUES (5, 62, 'tahani', '0.92857142857143', 0, '2019-02-25 04:10:29', 3, NULL, NULL);
-INSERT INTO `log_rek` VALUES (6, 64, 'tahani', '0.54545454545455', 1, '2019-02-25 04:10:29', 3, NULL, NULL);
-INSERT INTO `log_rek` VALUES (7, 66, 'tahani', '0.36363636363636', 2, '2019-02-25 04:10:29', 3, NULL, NULL);
-INSERT INTO `log_rek` VALUES (8, 27, 'tahani', '0.83333333333333', 0, '2019-02-25 04:10:54', 3, NULL, NULL);
-INSERT INTO `log_rek` VALUES (9, 26, 'tahani', '0.83333333333333', 1, '2019-02-25 04:10:54', 3, NULL, NULL);
-INSERT INTO `log_rek` VALUES (10, 25, 'tahani', '0.83333333333333', 2, '2019-02-25 04:10:54', 3, NULL, NULL);
-INSERT INTO `log_rek` VALUES (11, 24, 'tahani', '0.83333333333333', 3, '2019-02-25 04:10:54', 3, NULL, NULL);
-INSERT INTO `log_rek` VALUES (12, 19, 'tahani', '0.76785714285714', 4, '2019-02-25 04:10:54', 3, NULL, NULL);
-INSERT INTO `log_rek` VALUES (13, 64, 'tahani', '0.19518072289157', 0, '2019-02-25 04:11:41', 3, NULL, NULL);
-INSERT INTO `log_rek` VALUES (14, 62, 'tahani', '0.19277108433735', 1, '2019-02-25 04:11:41', 3, NULL, NULL);
-INSERT INTO `log_rek` VALUES (15, 66, 'tahani', '0.13253012048193', 2, '2019-02-25 04:11:42', 3, NULL, NULL);
-INSERT INTO `log_rek` VALUES (16, 9, 'tahani', '0.25', 0, '2019-02-25 04:11:53', 3, NULL, NULL);
-INSERT INTO `log_rek` VALUES (17, 10, 'tahani', '0.23214285714286', 1, '2019-02-25 04:11:53', 3, NULL, NULL);
-INSERT INTO `log_rek` VALUES (18, 50, 'tahani', '0.20289156626506', 2, '2019-02-25 04:11:53', 3, NULL, NULL);
-INSERT INTO `log_rek` VALUES (19, 37, 'tahani', '0.20289156626506', 3, '2019-02-25 04:11:53', 3, NULL, NULL);
-INSERT INTO `log_rek` VALUES (20, 36, 'tahani', '0.20289156626506', 4, '2019-02-25 04:11:53', 3, NULL, NULL);
-INSERT INTO `log_rek` VALUES (21, 9, 'tsukamoto', '9.5892857142857', 0, '2019-02-25 04:11:53', 3, NULL, NULL);
-INSERT INTO `log_rek` VALUES (22, 33, 'tsukamoto', '9.7951807228916', 1, '2019-02-25 04:11:53', 3, NULL, NULL);
-INSERT INTO `log_rek` VALUES (23, 2, 'tsukamoto', '9.8839285714286', 2, '2019-02-25 04:11:53', 3, NULL, NULL);
-INSERT INTO `log_rek` VALUES (24, 10, 'tsukamoto', '10.375', 3, '2019-02-25 04:11:53', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (1, 60, 'tahani', '0.23809523809524', 1, 0.0007, 'mO1dCNa2', '2019-02-26 06:37:04', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (2, 52, 'tahani', '0.21686746987952', 2, 0.0007, 'mO1dCNa2', '2019-02-26 06:37:04', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (3, 57, 'tahani', '0.20481927710843', 3, 0.0007, 'mO1dCNa2', '2019-02-26 06:37:05', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (4, 59, 'tahani', '0.10714285714286', 4, 0.0007, 'mO1dCNa2', '2019-02-26 06:37:05', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (5, 52, 'tsukamoto', '0.035714285714286', 1, 0.0048, 'mO1dCNa2', '2019-02-26 06:37:05', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (6, 57, 'tsukamoto', '0.048192771084337', 2, 0.0048, 'mO1dCNa2', '2019-02-26 06:37:05', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (7, 59, 'tsukamoto', '0.071428571428571', 3, 0.0048, 'mO1dCNa2', '2019-02-26 06:37:05', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (8, 60, 'tsukamoto', '0.10714285714286', 4, 0.0048, 'mO1dCNa2', '2019-02-26 06:37:05', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (9, 60, 'tahani', '0.23809523809524', 1, 0.0002, 'veqWYckr', '2019-02-26 06:38:41', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (10, 52, 'tahani', '0.21686746987952', 2, 0.0002, 'veqWYckr', '2019-02-26 06:38:41', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (11, 57, 'tahani', '0.20481927710843', 3, 0.0002, 'veqWYckr', '2019-02-26 06:38:41', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (12, 59, 'tahani', '0.10714285714286', 4, 0.0002, 'veqWYckr', '2019-02-26 06:38:41', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (13, 52, 'tsukamoto', '0.035714285714286', 1, 0.0051, 'veqWYckr', '2019-02-26 06:38:41', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (14, 57, 'tsukamoto', '0.048192771084337', 2, 0.0051, 'veqWYckr', '2019-02-26 06:38:41', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (15, 59, 'tsukamoto', '0.071428571428571', 3, 0.0051, 'veqWYckr', '2019-02-26 06:38:41', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (16, 60, 'tsukamoto', '0.10714285714286', 4, 0.0051, 'veqWYckr', '2019-02-26 06:38:42', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (17, 60, 'tahani', '0.52', 1, 0.0336, 'GwUbHAXg', '2019-02-26 16:55:27', 4, NULL, NULL);
+INSERT INTO `log_rek` VALUES (18, 58, 'tahani', '0.12', 2, 0.0336, 'GwUbHAXg', '2019-02-26 16:55:27', 4, NULL, NULL);
+INSERT INTO `log_rek` VALUES (19, 57, 'tahani', '0.04', 3, 0.0336, 'GwUbHAXg', '2019-02-26 16:55:27', 4, NULL, NULL);
+INSERT INTO `log_rek` VALUES (20, 55, 'tahani', '0.04', 4, 0.0336, 'GwUbHAXg', '2019-02-26 16:55:27', 4, NULL, NULL);
+INSERT INTO `log_rek` VALUES (21, 53, 'tahani', '0.04', 5, 0.0336, 'GwUbHAXg', '2019-02-26 16:55:27', 4, NULL, NULL);
+INSERT INTO `log_rek` VALUES (22, 53, 'tsukamoto', '0.78313253012048', 1, 0.0228, 'GwUbHAXg', '2019-02-26 16:55:28', 4, NULL, NULL);
+INSERT INTO `log_rek` VALUES (23, 55, 'tsukamoto', '0.78313253012048', 2, 0.0228, 'GwUbHAXg', '2019-02-26 16:55:28', 4, NULL, NULL);
+INSERT INTO `log_rek` VALUES (24, 58, 'tsukamoto', '0.79518072289157', 3, 0.0228, 'GwUbHAXg', '2019-02-26 16:55:28', 4, NULL, NULL);
+INSERT INTO `log_rek` VALUES (25, 60, 'tsukamoto', '0.89285714285714', 4, 0.0228, 'GwUbHAXg', '2019-02-26 16:55:28', 4, NULL, NULL);
+INSERT INTO `log_rek` VALUES (26, 57, 'tsukamoto', '0.95180722891566', 5, 0.0228, 'GwUbHAXg', '2019-02-26 16:55:28', 4, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for motor
@@ -535,6 +541,12 @@ INSERT INTO `variabel` VALUES (5, 'Berat', '56:112', '112:168', 'motor', 'berat'
 -- View structure for vw_log_pengunjung
 -- ----------------------------
 DROP VIEW IF EXISTS `vw_log_pengunjung`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vw_log_pengunjung` AS SELECT l.id_log, l.metode, l.nilai, l.urutan, m.merek, m.tipe, CONCAT(u.first_name,' | ',u.email) as pengguna FROM (log_rek l INNER JOIN motor m ON l.motor_id = m.id_motor) INNER JOIN auth_users u ON l.created_by = u.id ;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vw_log_pengunjung` AS SELECT l.id_log, l.metode, l.nilai, l.urutan, l.exec_time, l.sesi, m.merek, m.tipe, CONCAT(u.first_name,' | ',u.email) as pengguna FROM (log_rek l INNER JOIN motor m ON l.motor_id = m.id_motor) INNER JOIN auth_users u ON l.created_by = u.id ;
+
+-- ----------------------------
+-- View structure for vw_pengunjung
+-- ----------------------------
+DROP VIEW IF EXISTS `vw_pengunjung`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vw_pengunjung` AS SELECT l.id_log, l.metode, l.nilai, l.urutan, l.exec_time, l.sesi, l.created_at, CONCAT(a.first_name,' | ',a.email) as pengguna FROM log_rek l INNER JOIN auth_users a ON l.created_by = a.id GROUP BY sesi ;
 
 SET FOREIGN_KEY_CHECKS = 1;

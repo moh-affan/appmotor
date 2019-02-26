@@ -11,31 +11,16 @@ defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 					bPaginate: true,
 					bLengthChange: true,
 					bFilter: true,
-					bSort: true,
+					bSort: false,
 					bInfo: true,
 					bAutoWidth: false,
-					serverSide: true,
-					processing: true,
-					ajax: '<?=site_url('admin/pengunjung/publish?dt=true')?>',
 					columnDefs: [
 						{
 							'searchable': false,
 							'filterable': false,
 							'sortable': false,
 							'targets': 0,
-						},
-						{
-							'render': function (data, type, row) {
-								return "<a href='pengunjung/detail/" + row.sesi + "' class='btn btn-outline-primary btn-rounded btn-fw p-2'>" + data + "</a>";
-							},
-							'targets': 1,
 						}
-					],
-					columns: [
-						{'data': 'id_log'},
-						{'data': 'pengguna'},
-						{'data': 'sesi'},
-						{'data': 'created_at'},
 					],
 					aLengthMenu: [
 						[5, 10, 15, -1],
@@ -100,6 +85,56 @@ defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 					datatable.closest('.dataTables_wrapper').find('.dataTables_length').addClass('mx-auto');
 					datatable.closest('.dataTables_wrapper').find('.dataTables_length').addClass('mx-auto');
 				});
+
+				var multiLineData = {
+					labels: [<?=$label?>],
+					datasets: [{
+						label: 'Tahani',
+						data: [<?=$data_tahani?>],
+						borderColor: [
+							'#587ce4'
+						],
+						borderWidth: 2,
+						fill: false
+					},
+						{
+							label: 'Tsukamoto',
+							data: [<?=$data_tsukamoto?>],
+							borderColor: [
+								'#ede190'
+							],
+							borderWidth: 2,
+							fill: false
+						}
+					]
+				};
+				var options = {
+					scales: {
+						yAxes: [{
+							ticks: {
+								beginAtZero: true
+							}
+						}]
+					},
+					legend: {
+						display: true
+					},
+					elements: {
+						point: {
+							radius: 4
+						}
+					}
+
+				};
+
+				if ($("#grafik").length) {
+					var multiLineCanvas = $("#grafik").get(0).getContext("2d");
+					var lineChart = new Chart(multiLineCanvas, {
+						type: 'line',
+						data: multiLineData,
+						options: options
+					});
+				}
 			});
 		});
 	})(jQuery);

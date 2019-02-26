@@ -281,17 +281,20 @@ class Fuzzy
 							$n = 'mid';
 						$state['nilai'] = $n;
 						if ($n != 'mid')
-							$state['range'] = explode(':', $this->_variables['tangki'][$n]);
+							$state['range'] = [0, 1];//explode(':', $this->_variables['tangki'][$n]);
 						else {
-							$low = explode(':', $this->_variables['tangki']['min']);
-							$hi = explode(':', $this->_variables['tangki']['max']);
+							$low = 0;//explode(':', $this->_variables['tangki']['min']);
+							$hi = 1;//explode(':', $this->_variables['tangki']['max']);
 							$state['range'] = [$low[0], $hi[1]];
 						}
-
 					}
 				}
 				$infer = new stdClass();
-				$alpha = min($state[0], $state[1], $state[2], $state[3], $state[4]);
+				$states = [$state[0], $state[1], $state[2], $state[3], $state[4]];
+				$states = array_filter($states, function ($k) {
+					return $k != 1;
+				});
+				$alpha = max($states);//min($state[0], $state[1], $state[2], $state[3], $state[4]);
 				$infer->alpha = $alpha;
 				$state['min'] = $alpha;
 				$min = $state['range'][0];

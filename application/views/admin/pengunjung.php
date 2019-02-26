@@ -13,11 +13,9 @@ defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 									<thead>
 									<tr>
 										<th>#</th>
-										<th>Merek</th>
-										<th>Tipe</th>
-										<th>Metode</th>
-										<th>Nilai</th>
-										<th>Urutan</th>
+										<th>Pengguna</th>
+										<th>Session ID</th>
+										<th>Tanggal</th>
 									</tr>
 									</thead>
 									<tbody></tbody>

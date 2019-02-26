@@ -39,29 +39,52 @@ class Rekomendasi extends Member_Controller
 		$this->benchmark->mark('tahani_start');
 		$this->fuzzy->tahani($kriteria, $data);
 		$this->benchmark->mark('tahani_end');
-		$this->set_var('tahani_time', $this->benchmark->elapsed_time('tahani_start', 'tahani_end'));
+		$tahani_time = $this->benchmark->elapsed_time('tahani_start', 'tahani_end');
+		$this->set_var('tahani_time', $tahani_time);
 		$firestrength = $this->fuzzy->get_fire_strength();
 		$this->set_var('tahani', $firestrength);
 		$this->benchmark->mark('tsukamoto_start');
 		$this->fuzzy->tsukamoto2($post_kriteria, $this->m_motor->get_all(), 'id_motor', $exclude);
 		$this->benchmark->mark('tsukamoto_end');
-		$this->set_var('tsukamoto_time', $this->benchmark->elapsed_time('tsukamoto_start', 'tsukamoto_end'));
+		$tsukamoto_time = $this->benchmark->elapsed_time('tsukamoto_start', 'tsukamoto_end');
+		$this->set_var('tsukamoto_time', $tsukamoto_time);
 		$defuzzed = $this->fuzzy->get_defuzzed();
 		$this->set_var('tsukamoto', $defuzzed);
+		$mixed = [];
 		$counter = 0;
+		$session_id = random_string();
 		foreach ($firestrength as $k => $fs) {
 			if ($counter == 5) break;
-			$this->m_log_rek->insert(['motor_id' => $fs->id_motor, 'metode' => 'tahani', 'nilai' => $fs->fire_strength, 'urutan' => $counter, 'created_by' => $this->ion_auth->get_user_id()]);
-			$counter++;
+			$this->m_log_rek->insert(['motor_id' => $fs->id_motor, 'metode' => 'tahani', 'nilai' => $fs->fire_strength, 'urutan' => ++$counter, 'exec_time' => $tahani_time, 'sesi' => $session_id, 'created_by' => $this->ion_auth->get_user_id()]);
+			$key = "$fs->id_motor";
+			$fs->nilai = $fs->fire_strength;
+//			$mixed[$key] = $fs;
+			$this->_add_to_result($mixed, $fs);
 		}
 		$counter = 0;
 		foreach ($defuzzed as $k => $fs) {
 			if ($counter == 5) break;
-			$this->m_log_rek->insert(['motor_id' => $fs->id_motor, 'metode' => 'tsukamoto', 'nilai' => $fs->defuzzed, 'urutan' => $counter, 'created_by' => $this->ion_auth->get_user_id()]);
-			$counter++;
+			$this->m_log_rek->insert(['motor_id' => $fs->id_motor, 'metode' => 'tsukamoto', 'nilai' => $fs->defuzzed, 'urutan' => ++$counter, 'exec_time' => $tsukamoto_time, 'sesi' => $session_id, 'created_by' => $this->ion_auth->get_user_id()]);
+			$key = "$fs->id_motor";
+			$fs->nilai = $fs->defuzzed;
+//			$mixed[$key] = $fs;
+			$this->_add_to_result($mixed, $fs);
 		}
+		krsort($mixed);
+		$this->set_var('mixed', $mixed);
 		$this->add_inline_script($this->load->view('cloudui/hasil_js', ['judul_laporan' => 'Hasil Rekomendasi'], true));
 		$this->title('Hasil Rekomendasi')->menu_active('rekomendasi')->layout('cloudui')->view('cloudui/hasil_rekomendasi')->render();
+	}
+
+	private function _add_to_result(&$array, $motor)
+	{
+		if (isset($array[$motor->id_motor])) {
+			$d = $array[$motor->id_motor];
+			if ($d->nilai > $motor->nilai)
+				$array[$motor->id_motor] = $motor;
+		} else {
+			$array[$motor->id_motor] = $motor;
+		}
 	}
 
 	public function rules_check()

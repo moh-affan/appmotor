@@ -35,9 +35,9 @@ defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 						<div class="col-md-8">
 							<select class="form-control" name="price" required="" aria-label="Harga">
 								<option disabled="disabled" selected="selected" value="">Silahkan Pilih</option>
-								<option value="harga_max">Mahal</option>
-								<option value="harga_mid">Sedang</option>
-								<option value="harga_min">Murah</option>
+								<option value="harga_max">Mahal ( >= Rp. 48.000.000,00 )</option>
+								<option value="harga_mid">Sedang ( Rp. 24.000.000,00 - Rp. 72.000.000,00 )</option>
+								<option value="harga_min">Murah ( <= Rp. 48.000.000,00 )</option>
 							</select>
 						</div>
 						<br><br>
@@ -45,9 +45,9 @@ defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 						<div class="col-md-8">
 							<select class="form-control" name="tank" required="" aria-label="Kapasitas BBM">
 								<option disabled="disabled" selected="selected" value="">Silahkan Pilih</option>
-								<option value="tangki_max">Besar</option>
-								<option value="tangki_mid">Sedang</option>
-								<option value="tangki_min">Kecil</option>
+								<option value="tangki_max">Besar ( >= 9 Liter )</option>
+								<option value="tangki_mid">Sedang ( 4 Liter - 14.5 Liter )</option>
+								<option value="tangki_min">Kecil ( <= 9 Liter )</option>
 							</select>
 						</div>
 						<br><br>
@@ -55,9 +55,9 @@ defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 						<div class="col-md-8">
 							<select class="form-control" name="speed" required="" aria-label="Kecepatan Mesin">
 								<option disabled="disabled" selected="selected" value="">Silahkan Pilih</option>
-								<option value="kecepatan_max">Cepat</option>
-								<option value="kecepatan_mid">Sedang</option>
-								<option value="kecepatan_min">Lambat</option>
+								<option value="kecepatan_max">Cepat ( >= 166 cc )</option>
+								<option value="kecepatan_mid">Sedang ( 83 cc - 250 cc )</option>
+								<option value="kecepatan_min">Lambat ( <= 166 cc )</option>
 							</select>
 						</div>
 						<br><br>
@@ -79,9 +79,9 @@ defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 						<div class="col-md-8">
 							<select class="form-control" name="luggage" required="" aria-label="Kapasitas Bagasi">
 								<option disabled="disabled" selected="selected" value="">Silahkan Pilih</option>
-								<option value="bagasi_max">Luas</option>
-								<option value="bagasi_mid">Sedang</option>
-								<option value="bagasi_min">Sempit</option>
+								<option value="bagasi_max">Luas ( >= 16.6 Liter )</option>
+								<option value="bagasi_mid">Sedang ( 8.3 Liter - 25 Liter )</option>
+								<option value="bagasi_min">Sempit ( <= 16.6 Liter )</option>
 							</select>
 						</div>
 						<br><br>
@@ -89,9 +89,9 @@ defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 						<div class="col-md-8">
 							<select class="form-control" name="weight" required="" aria-label="Berat">
 								<option disabled="disabled" selected="selected" value="">Silahkan Pilih</option>
-								<option value="berat_max">Berat</option>
-								<option value="berat_mid">Sedang</option>
-								<option value="berat_min">Ringan</option>
+								<option value="berat_max">Berat ( >= 112 Kg )</option>
+								<option value="berat_mid">Sedang ( 56 Kg - 168 Kg )</option>
+								<option value="berat_min">Ringan ( <= 112 Kg )</option>
 							</select>
 						</div>
 						<br><br>

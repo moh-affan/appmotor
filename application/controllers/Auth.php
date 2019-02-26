@@ -392,13 +392,9 @@ class Auth extends MY_Controller
 	/**
 	 * Create a new user
 	 */
-	public function create_user()
+	public function register()
 	{
-		$title = $this->lang->line('create_user_heading');
-
-		if (!$this->ion_auth->logged_in() || !$this->ion_auth->is_admin()) {
-			redirect('auth', 'refresh');
-		}
+		$title = 'Register';
 
 		$tables = $this->config->item('tables', 'ion_auth');
 		$identity_column = $this->config->item('identity', 'ion_auth');
@@ -406,7 +402,7 @@ class Auth extends MY_Controller
 
 		// validate form input
 		$this->form_validation->set_rules('first_name', $this->lang->line('create_user_validation_fname_label'), 'trim|required');
-		$this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'), 'trim|required');
+		$this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'), 'trim');
 		if ($identity_column !== 'email') {
 			$this->form_validation->set_rules('identity', $this->lang->line('create_user_validation_identity_label'), 'trim|required|is_unique[' . $tables['users'] . '.' . $identity_column . ']');
 			$this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'trim|required|valid_email');
@@ -433,8 +429,8 @@ class Auth extends MY_Controller
 		if ($this->form_validation->run() === TRUE && $this->ion_auth->register($identity, $password, $email, $additional_data)) {
 			// check to see if we are creating the user
 			// redirect them back to the admin page
-			$this->session->set_flashdata('message', $this->ion_auth->messages());
-			redirect("auth", 'refresh');
+			$this->set_var('message', $this->ion_auth->messages());
+			$this->title($title)->menu_active('login')->layout('blank')->view('cloudui/register')->render();
 		} else {
 			// display the create user form
 			// set the flash data error message if there is one
@@ -488,7 +484,7 @@ class Auth extends MY_Controller
 				'type' => 'password',
 				'value' => $this->form_validation->set_value('password_confirm'),
 			));
-			$this->title($title)->menu_active('login')->layout($this->theme)->view('auth/create_user')->render();
+			$this->title($title)->menu_active('login')->layout('blank')->view('cloudui/register')->render();
 		}
 	}
 
