@@ -1,13 +1,13 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 
-<h2 class="text-center"><?php echo $tahani[0]['pengguna']?></h2>
+<h2 class="text-center"><?php echo $mamdani[0]['pengguna']?></h2>
 <br>
 <div class="card mb-5">
 	<div class="row">
 		<div class="col-md-12">
 			<div class="card-body">
-				<h4 class="card-title">Hasil Rekomendasi Tahani</h4>
+				<h4 class="card-title">Hasil Rekomendasi Mamdani</h4>
 				<div class="row">
 					<div class="col-12 table-responsive">
 						<table id="order-listing" class="datatable table">
@@ -16,14 +16,14 @@ defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 								<th>#</th>
 								<th>Merek</th>
 								<th>Tipe</th>
-								<th>Fire Strength</th>
+								<th>Defuzzifikasi</th>
 								<th>Execution Time</th>
 							</tr>
 							</thead>
 							<tbody>
 							<?php
 							$n = 1;
-							foreach ($tahani as $d): /*if ($n > 5) break;*/
+							foreach ($mamdani as $d): /*if ($n > 5) break;*/
 								$d = json_decode(json_encode($d)); ?>
 								<tr>
 									<td><?= $n++ ?></td>

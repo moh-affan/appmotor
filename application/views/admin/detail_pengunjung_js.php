@@ -89,8 +89,8 @@ defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 				var multiLineData = {
 					labels: [<?=$label?>],
 					datasets: [{
-						label: 'Tahani',
-						data: [<?=$data_tahani?>],
+						label: 'Mamdani',
+						data: [<?=$data_mamdani?>],
 						borderColor: [
 							'#587ce4'
 						],

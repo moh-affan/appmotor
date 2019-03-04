@@ -36,6 +36,8 @@ class Rekomendasi extends Member_Controller
 				$post_kriteria[] = $kr;
 		}
 		$data = $data->get_all();
+
+		/* tahani
 		$this->benchmark->mark('tahani_start');
 		$this->fuzzy->tahani($kriteria, $data);
 		$this->benchmark->mark('tahani_end');
@@ -43,31 +45,47 @@ class Rekomendasi extends Member_Controller
 		$this->set_var('tahani_time', $tahani_time);
 		$firestrength = $this->fuzzy->get_fire_strength();
 		$this->set_var('tahani', $firestrength);
+		*/
+
 		$this->benchmark->mark('tsukamoto_start');
-		$this->fuzzy->tsukamoto2($post_kriteria, $this->m_motor->get_all(), 'id_motor', $exclude);
+		$this->fuzzy->tsukamoto($post_kriteria, $this->m_motor->get_all(), 'id_motor', $exclude);
 		$this->benchmark->mark('tsukamoto_end');
 		$tsukamoto_time = $this->benchmark->elapsed_time('tsukamoto_start', 'tsukamoto_end');
 		$this->set_var('tsukamoto_time', $tsukamoto_time);
 		$defuzzed = $this->fuzzy->get_defuzzed();
 		$this->set_var('tsukamoto', $defuzzed);
+
+		$this->benchmark->mark('mamdani_start');
+		$this->fuzzy->mamdani($post_kriteria, $this->m_motor->get_all(), 'id_motor', $exclude);
+		$this->benchmark->mark('mamdani_end');
+		$mamdani_time = $this->benchmark->elapsed_time('mamdani_start', 'mamdani_end');
+		$this->set_var('mamdani_time', $mamdani_time);
+		$defuzzed2 = $this->fuzzy->get_defuzzed();
+		$this->set_var('mamdani', $defuzzed2);
+
 		$mixed = [];
-		$counter = 0;
 		$session_id = random_string();
+		/* tahani
+		$counter = 0;
 		foreach ($firestrength as $k => $fs) {
 			if ($counter == 5) break;
 			$this->m_log_rek->insert(['motor_id' => $fs->id_motor, 'metode' => 'tahani', 'nilai' => $fs->fire_strength, 'urutan' => ++$counter, 'exec_time' => $tahani_time, 'sesi' => $session_id, 'created_by' => $this->ion_auth->get_user_id()]);
-			$key = "$fs->id_motor";
 			$fs->nilai = $fs->fire_strength;
-//			$mixed[$key] = $fs;
 			$this->_add_to_result($mixed, $fs);
 		}
+		*/
 		$counter = 0;
 		foreach ($defuzzed as $k => $fs) {
 			if ($counter == 5) break;
 			$this->m_log_rek->insert(['motor_id' => $fs->id_motor, 'metode' => 'tsukamoto', 'nilai' => $fs->defuzzed, 'urutan' => ++$counter, 'exec_time' => $tsukamoto_time, 'sesi' => $session_id, 'created_by' => $this->ion_auth->get_user_id()]);
-			$key = "$fs->id_motor";
 			$fs->nilai = $fs->defuzzed;
-//			$mixed[$key] = $fs;
+			$this->_add_to_result($mixed, $fs);
+		}
+		$counter = 0;
+		foreach ($defuzzed2 as $k => $fs) {
+			if ($counter == 5) break;
+			$this->m_log_rek->insert(['motor_id' => $fs->id_motor, 'metode' => 'mamdani', 'nilai' => $fs->defuzzed, 'urutan' => ++$counter, 'exec_time' => $mamdani_time, 'sesi' => $session_id, 'created_by' => $this->ion_auth->get_user_id()]);
+			$fs->nilai = $fs->defuzzed;
 			$this->_add_to_result($mixed, $fs);
 		}
 		krsort($mixed);
@@ -85,16 +103,6 @@ class Rekomendasi extends Member_Controller
 		} else {
 			$array[$motor->id_motor] = $motor;
 		}
-	}
-
-	public function rules_check()
-	{
-		$this->load->library('fuzzy');
-		$this->load->model('m_motor');
-		$data = $this->m_motor->get_all();
-		$this->fuzzy->tsukamoto2(['harga_min', 'tangki_min', 'kecepatan_min', 'bagasi_min', 'berat_max'], $data, 'id_motor');
-		$defuzzed = $this->fuzzy->get_defuzzed();
-		var_dump($defuzzed);
 	}
 
 	private function _load_ext_datatable()

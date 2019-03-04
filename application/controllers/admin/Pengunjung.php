@@ -77,30 +77,40 @@ class Pengunjung extends Authenticated_Controller
 	public function detail($sesi)
 	{
 		$graph = array();
-		$tahani = $this->m_vw_log_pengunjung->as_array()->where(['metode' => 'tahani', 'sesi' => $sesi])->get_all();
+		/*$tahani = $this->m_vw_log_pengunjung->as_array()->where(['metode' => 'tahani', 'sesi' => $sesi])->get_all();*/
 		$tsukamoto = $this->m_vw_log_pengunjung->as_array()->where(['metode' => 'tsukamoto', 'sesi' => $sesi])->get_all();
+		$mamdani = $this->m_vw_log_pengunjung->as_array()->where(['metode' => 'mamdani', 'sesi' => $sesi])->get_all();
+		/* tahani
 		foreach ($tahani as $t) {
 			$mtr = $t['merek'] . ' ' . $t['tipe'];
 			$graph['label'][] = $mtr;
 			$graph['data']['tahani'][$mtr] = floatval($t['nilai']);
 			$graph['data']['tsukamoto'][$mtr] = 0;
 		}
+		*/
+		foreach ($mamdani as $t) {
+			$mtr = $t['merek'] . ' ' . $t['tipe'];
+			$graph['label'][] = $mtr;
+			$graph['data']['mamdani'][$mtr] = floatval($t['nilai']);
+			$graph['data']['tsukamoto'][$mtr] = 0;
+		}
 		foreach ($tsukamoto as $t) {
 			$mtr = $t['merek'] . ' ' . $t['tipe'];
 			$graph['data']['tsukamoto'][$mtr] = floatval($t['nilai']);
-			if (!isset($graph['data']['tahani'][$mtr])) {
-				$graph['data']['tahani'][$mtr] = 0;
+			if (!isset($graph['data']['mamdani'][$mtr])) {
+				$graph['data']['mamdani'][$mtr] = 0;
 				$graph['label'][] = $mtr;
 			}
 		}
 		$label = '"' . implode('","', $graph['label']) . '"';
 		$data_tsukamoto = implode(',', array_values($graph['data']['tsukamoto']));
-		$data_tahani = implode(',', array_values($graph['data']['tahani']));
-		$this->set_var('tahani', $tahani);
+		$data_mamdani = implode(',', array_values($graph['data']['mamdani']));
+		/*$this->set_var('tahani', $tahani);*/
+		$this->set_var('mamdani', $mamdani);
 		$this->set_var('tsukamoto', $tsukamoto);
 		$data['label'] = $label;
 		$data['data_tsukamoto'] = $data_tsukamoto;
-		$data['data_tahani'] = $data_tahani;
+		$data['data_mamdani'] = $data_mamdani;
 		$this->_load_ext_datatable();
 		$this->add_inline_script($this->load->view('admin/detail_pengunjung_js', array_merge(['judul_laporan' => 'Laporan Detail Pengunjung'], $data), true));
 		$this->title('Detail Pengunjung')->menu_active('pengunjung')->layout('cloudui')->view('admin/detail_pengunjung')->render();
