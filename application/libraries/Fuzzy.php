@@ -26,6 +26,12 @@ class Fuzzy
 		$this->_initialize_rules();
 	}
 
+	public static function log($var)
+	{
+		var_dump($var);
+		echo '<br>';
+	}
+
 	/**
 	 * @return CI_Controller
 	 */
@@ -154,6 +160,7 @@ class Fuzzy
 	{
 		//fuzzyfikasi
 		$fuzzy = array();
+		self::log('fuzzyfikasi');
 		foreach ($data as $datum) {
 			foreach ($kriteria as $k) {
 				$field = array_pad(explode('_', $k), 2, '');
@@ -168,8 +175,10 @@ class Fuzzy
 				}
 			}
 		}
+		self::log($fuzzy);
 
 		//inferensi
+		self::log('inferensi');
 		$inference = array();
 		$rl = array();
 		foreach ($kriteria as $ker) {
@@ -195,18 +204,25 @@ class Fuzzy
 				}
 				$infer = new stdClass();
 				$states = [$state[0], $state[1], $state[2], $state[3], $state[4]];
-				$states = array_filter($states, function ($k) {
-					return $k != 0;
-				});
-				$alpha = min($states);
+//				$states = array_filter($states, function ($k) {
+//					return $k != 0;
+//				});
+				$alpha = count($states) <= 0 ? 0 : min($states);
 				$infer->alpha = $alpha;
 				$min = $state['range'][0];
 				$max = $state['range'][1];
-				$t = $alpha * ($max - $min) + $min;
+//				$t = $alpha * ($max - $min) + $min;
+				/**
+				 * Menghitung nilai z
+				 * Rumus: (max-alpha)/(max-min)
+				 */
+				$t = ($max - $alpha) / ($max - $min);
 				$infer->z = $t;
 				$inference[$datum->$primary][] = $infer;
 			}
 		}
+		self::log(['rules' => $rules]);
+		self::log(['inferensi' => $inference]);
 
 		//defuzzifikasi
 		$defuzzed = array();
@@ -275,10 +291,11 @@ class Fuzzy
 				}
 				$infer = new stdClass();
 				$states = [$state[0], $state[1], $state[2], $state[3], $state[4]];
-				$states = array_filter($states, function ($k) {
-					return $k != 0;
-				});
-				$alpha = min($states);
+//				$states = array_filter($states, function ($k) {
+//					return $k != 0;
+//				});
+
+				$alpha = count($states) <= 0 ? 0 : min($states);
 				$infer->alpha = $alpha;
 				$min = $state['range'][0];
 				$max = $state['range'][1];
@@ -327,6 +344,7 @@ class Fuzzy
 		}
 		if ($side_down == 0)
 			return 0;
+		self::log("defuzzifikasi : $side_up / $side_down");
 		return $side_up / $side_down;
 	}
 
