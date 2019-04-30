@@ -11,7 +11,7 @@
  Target Server Version : 100137
  File Encoding         : 65001
 
- Date: 26/02/2019 23:03:52
+ Date: 30/04/2019 10:15:32
 */
 
 SET NAMES utf8mb4;
@@ -44,7 +44,13 @@ CREATE TABLE `auth_login_attempts`  (
   `login` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `time` int(11) UNSIGNED NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of auth_login_attempts
+-- ----------------------------
+INSERT INTO `auth_login_attempts` VALUES (1, '127.0.0.1', 'member', 1555311657);
+INSERT INTO `auth_login_attempts` VALUES (2, '127.0.0.1', 'andre', 1555311667);
 
 -- ----------------------------
 -- Table structure for auth_users
@@ -74,8 +80,8 @@ CREATE TABLE `auth_users`  (
 -- ----------------------------
 -- Records of auth_users
 -- ----------------------------
-INSERT INTO `auth_users` VALUES (1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, NULL, 1268889823, 1551196552, 1, 'Admin', '', '', '085258434274');
-INSERT INTO `auth_users` VALUES (3, '127.0.0.1', 'desy1234', '$2y$08$z.y7uYQk1EhFNhS1CuBwTOWdMRU6Hijf69EIs6wqlen0wiEpPpk5C', NULL, 'desy@app.com', NULL, NULL, NULL, NULL, 1550121815, 1551159325, 1, 'Desy', '', '', '081939432238');
+INSERT INTO `auth_users` VALUES (1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, NULL, 1268889823, 1551674214, 1, 'Admin', '', '', '085258434274');
+INSERT INTO `auth_users` VALUES (3, '127.0.0.1', 'desy1234', '$2y$08$z.y7uYQk1EhFNhS1CuBwTOWdMRU6Hijf69EIs6wqlen0wiEpPpk5C', NULL, 'desy@app.com', NULL, NULL, NULL, NULL, 1550121815, 1555311695, 1, 'Desy', '', '', '081939432238');
 INSERT INTO `auth_users` VALUES (4, '127.0.0.1', 'b4affan', '$2y$08$aFkyDqIRn/jxA0Tal1l9Q.q/IjKFVw5dhAUAHCsAMCv/UcnnfjQyi', NULL, 'b4affan@gmail.com', NULL, NULL, NULL, NULL, 1551195888, 1551196039, 1, 'Moh. Affan', '', '', '085258434274');
 
 -- ----------------------------
@@ -119,37 +125,71 @@ CREATE TABLE `log_rek`  (
   `updated_at` datetime(0) NULL DEFAULT NULL,
   `updated_by` int(11) NULL DEFAULT NULL,
   PRIMARY KEY (`id_log`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 27 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 163 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of log_rek
 -- ----------------------------
-INSERT INTO `log_rek` VALUES (1, 60, 'tahani', '0.23809523809524', 1, 0.0007, 'mO1dCNa2', '2019-02-26 06:37:04', 3, NULL, NULL);
-INSERT INTO `log_rek` VALUES (2, 52, 'tahani', '0.21686746987952', 2, 0.0007, 'mO1dCNa2', '2019-02-26 06:37:04', 3, NULL, NULL);
-INSERT INTO `log_rek` VALUES (3, 57, 'tahani', '0.20481927710843', 3, 0.0007, 'mO1dCNa2', '2019-02-26 06:37:05', 3, NULL, NULL);
-INSERT INTO `log_rek` VALUES (4, 59, 'tahani', '0.10714285714286', 4, 0.0007, 'mO1dCNa2', '2019-02-26 06:37:05', 3, NULL, NULL);
-INSERT INTO `log_rek` VALUES (5, 52, 'tsukamoto', '0.035714285714286', 1, 0.0048, 'mO1dCNa2', '2019-02-26 06:37:05', 3, NULL, NULL);
-INSERT INTO `log_rek` VALUES (6, 57, 'tsukamoto', '0.048192771084337', 2, 0.0048, 'mO1dCNa2', '2019-02-26 06:37:05', 3, NULL, NULL);
-INSERT INTO `log_rek` VALUES (7, 59, 'tsukamoto', '0.071428571428571', 3, 0.0048, 'mO1dCNa2', '2019-02-26 06:37:05', 3, NULL, NULL);
-INSERT INTO `log_rek` VALUES (8, 60, 'tsukamoto', '0.10714285714286', 4, 0.0048, 'mO1dCNa2', '2019-02-26 06:37:05', 3, NULL, NULL);
-INSERT INTO `log_rek` VALUES (9, 60, 'tahani', '0.23809523809524', 1, 0.0002, 'veqWYckr', '2019-02-26 06:38:41', 3, NULL, NULL);
-INSERT INTO `log_rek` VALUES (10, 52, 'tahani', '0.21686746987952', 2, 0.0002, 'veqWYckr', '2019-02-26 06:38:41', 3, NULL, NULL);
-INSERT INTO `log_rek` VALUES (11, 57, 'tahani', '0.20481927710843', 3, 0.0002, 'veqWYckr', '2019-02-26 06:38:41', 3, NULL, NULL);
-INSERT INTO `log_rek` VALUES (12, 59, 'tahani', '0.10714285714286', 4, 0.0002, 'veqWYckr', '2019-02-26 06:38:41', 3, NULL, NULL);
-INSERT INTO `log_rek` VALUES (13, 52, 'tsukamoto', '0.035714285714286', 1, 0.0051, 'veqWYckr', '2019-02-26 06:38:41', 3, NULL, NULL);
-INSERT INTO `log_rek` VALUES (14, 57, 'tsukamoto', '0.048192771084337', 2, 0.0051, 'veqWYckr', '2019-02-26 06:38:41', 3, NULL, NULL);
-INSERT INTO `log_rek` VALUES (15, 59, 'tsukamoto', '0.071428571428571', 3, 0.0051, 'veqWYckr', '2019-02-26 06:38:41', 3, NULL, NULL);
-INSERT INTO `log_rek` VALUES (16, 60, 'tsukamoto', '0.10714285714286', 4, 0.0051, 'veqWYckr', '2019-02-26 06:38:42', 3, NULL, NULL);
-INSERT INTO `log_rek` VALUES (17, 60, 'tahani', '0.52', 1, 0.0336, 'GwUbHAXg', '2019-02-26 16:55:27', 4, NULL, NULL);
-INSERT INTO `log_rek` VALUES (18, 58, 'tahani', '0.12', 2, 0.0336, 'GwUbHAXg', '2019-02-26 16:55:27', 4, NULL, NULL);
-INSERT INTO `log_rek` VALUES (19, 57, 'tahani', '0.04', 3, 0.0336, 'GwUbHAXg', '2019-02-26 16:55:27', 4, NULL, NULL);
-INSERT INTO `log_rek` VALUES (20, 55, 'tahani', '0.04', 4, 0.0336, 'GwUbHAXg', '2019-02-26 16:55:27', 4, NULL, NULL);
-INSERT INTO `log_rek` VALUES (21, 53, 'tahani', '0.04', 5, 0.0336, 'GwUbHAXg', '2019-02-26 16:55:27', 4, NULL, NULL);
-INSERT INTO `log_rek` VALUES (22, 53, 'tsukamoto', '0.78313253012048', 1, 0.0228, 'GwUbHAXg', '2019-02-26 16:55:28', 4, NULL, NULL);
-INSERT INTO `log_rek` VALUES (23, 55, 'tsukamoto', '0.78313253012048', 2, 0.0228, 'GwUbHAXg', '2019-02-26 16:55:28', 4, NULL, NULL);
-INSERT INTO `log_rek` VALUES (24, 58, 'tsukamoto', '0.79518072289157', 3, 0.0228, 'GwUbHAXg', '2019-02-26 16:55:28', 4, NULL, NULL);
-INSERT INTO `log_rek` VALUES (25, 60, 'tsukamoto', '0.89285714285714', 4, 0.0228, 'GwUbHAXg', '2019-02-26 16:55:28', 4, NULL, NULL);
-INSERT INTO `log_rek` VALUES (26, 57, 'tsukamoto', '0.95180722891566', 5, 0.0228, 'GwUbHAXg', '2019-02-26 16:55:28', 4, NULL, NULL);
+INSERT INTO `log_rek` VALUES (103, 40, 'tsukamoto', '0.0035714285714287', 1, 0.0143, 'UBX1Ztlw', '2019-03-04 05:35:33', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (104, 50, 'tsukamoto', '0.035714285714286', 2, 0.0143, 'UBX1Ztlw', '2019-03-04 05:35:33', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (105, 37, 'tsukamoto', '0.096458333333333', 3, 0.0143, 'UBX1Ztlw', '2019-03-04 05:35:33', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (106, 6, 'tsukamoto', '0.125', 4, 0.0143, 'UBX1Ztlw', '2019-03-04 05:35:33', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (107, 38, 'tsukamoto', '0.14229166666667', 5, 0.0143, 'UBX1Ztlw', '2019-03-04 05:35:33', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (108, 40, 'mamdani', '0.0000064004096262166', 1, 0.0152, 'UBX1Ztlw', '2019-03-04 05:35:33', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (109, 50, 'mamdani', '0.00066137566137566', 2, 0.0152, 'UBX1Ztlw', '2019-03-04 05:35:33', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (110, 37, 'mamdani', '0.0051487443317193', 3, 0.0152, 'UBX1Ztlw', '2019-03-04 05:35:33', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (111, 6, 'mamdani', '0.0089285714285714', 4, 0.0152, 'UBX1Ztlw', '2019-03-04 05:35:33', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (112, 38, 'mamdani', '0.011802915755809', 5, 0.0152, 'UBX1Ztlw', '2019-03-04 05:35:33', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (113, 31, 'tsukamoto', '0.67469879518072', 1, 0.0138, '07DhvMQk', '2019-04-15 09:04:28', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (114, 15, 'tsukamoto', '0.67469879518072', 2, 0.0138, '07DhvMQk', '2019-04-15 09:04:28', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (115, 13, 'tsukamoto', '0.67469879518072', 3, 0.0138, '07DhvMQk', '2019-04-15 09:04:28', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (116, 12, 'tsukamoto', '0.68469879518072', 4, 0.0138, '07DhvMQk', '2019-04-15 09:04:28', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (117, 22, 'tsukamoto', '0.69638554216867', 5, 0.0138, '07DhvMQk', '2019-04-15 09:04:28', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (118, 48, 'mamdani', '0.000071715433161216', 1, 0.0153, '07DhvMQk', '2019-04-15 09:04:28', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (119, 26, 'mamdani', '0.016666666666667', 2, 0.0153, '07DhvMQk', '2019-04-15 09:04:28', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (120, 25, 'mamdani', '0.016666666666667', 3, 0.0153, '07DhvMQk', '2019-04-15 09:04:28', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (121, 29, 'mamdani', '0.016666666666667', 4, 0.0153, '07DhvMQk', '2019-04-15 09:04:28', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (122, 27, 'mamdani', '0.016666666666667', 5, 0.0153, '07DhvMQk', '2019-04-15 09:04:28', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (123, 59, 'tsukamoto', '0.13253012048193', 1, 0.0049, 'IHxmOMVD', '2019-04-15 09:06:35', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (124, 60, 'tsukamoto', '0.19375', 2, 0.0049, 'IHxmOMVD', '2019-04-15 09:06:35', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (125, 57, 'mamdani', '0.25918307375845', 1, 0.0126, 'IHxmOMVD', '2019-04-15 09:06:35', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (126, 52, 'mamdani', '1.5658163294508', 2, 0.0126, 'IHxmOMVD', '2019-04-15 09:06:35', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (127, 60, 'mamdani', '1.6775201612903', 3, 0.0126, 'IHxmOMVD', '2019-04-15 09:06:35', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (128, 59, 'mamdani', '2.8389923329682', 4, 0.0126, 'IHxmOMVD', '2019-04-15 09:06:35', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (129, 59, 'tsukamoto', '0.13253012048193', 1, 0.0063, 'OqyPjH73', '2019-04-15 09:10:01', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (130, 60, 'tsukamoto', '0.19375', 2, 0.0063, 'OqyPjH73', '2019-04-15 09:10:01', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (131, 57, 'mamdani', '0.25918307375845', 1, 0.01, 'OqyPjH73', '2019-04-15 09:10:01', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (132, 52, 'mamdani', '1.5658163294508', 2, 0.01, 'OqyPjH73', '2019-04-15 09:10:01', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (133, 60, 'mamdani', '1.6775201612903', 3, 0.01, 'OqyPjH73', '2019-04-15 09:10:02', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (134, 59, 'mamdani', '2.8389923329682', 4, 0.01, 'OqyPjH73', '2019-04-15 09:10:02', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (135, 59, 'tsukamoto', '0.13253012048193', 1, 0.0055, 'pGAORWPB', '2019-04-15 09:12:08', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (136, 60, 'tsukamoto', '0.19375', 2, 0.0055, 'pGAORWPB', '2019-04-15 09:12:08', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (137, 57, 'mamdani', '0.25918307375845', 1, 0.0131, 'pGAORWPB', '2019-04-15 09:12:08', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (138, 52, 'mamdani', '1.5658163294508', 2, 0.0131, 'pGAORWPB', '2019-04-15 09:12:08', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (139, 60, 'mamdani', '1.6775201612903', 3, 0.0131, 'pGAORWPB', '2019-04-15 09:12:08', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (140, 59, 'mamdani', '2.8389923329682', 4, 0.0131, 'pGAORWPB', '2019-04-15 09:12:08', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (141, 59, 'tsukamoto', '0.13253012048193', 1, 0.0045, 'GzTMh54e', '2019-04-15 09:12:42', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (142, 60, 'tsukamoto', '0.19375', 2, 0.0045, 'GzTMh54e', '2019-04-15 09:12:42', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (143, 57, 'mamdani', '0.25918307375845', 1, 0.0157, 'GzTMh54e', '2019-04-15 09:12:42', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (144, 52, 'mamdani', '1.5658163294508', 2, 0.0157, 'GzTMh54e', '2019-04-15 09:12:42', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (145, 60, 'mamdani', '1.6775201612903', 3, 0.0157, 'GzTMh54e', '2019-04-15 09:12:42', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (146, 59, 'mamdani', '2.8389923329682', 4, 0.0157, 'GzTMh54e', '2019-04-15 09:12:42', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (147, 59, 'tsukamoto', '0.13253012048193', 1, 0.0045, '9TRYP1Sg', '2019-04-15 09:13:08', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (148, 60, 'tsukamoto', '0.19375', 2, 0.0045, '9TRYP1Sg', '2019-04-15 09:13:09', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (149, 57, 'mamdani', '0.25918307375845', 1, 0.01, '9TRYP1Sg', '2019-04-15 09:13:09', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (150, 52, 'mamdani', '1.5658163294508', 2, 0.01, '9TRYP1Sg', '2019-04-15 09:13:09', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (151, 60, 'mamdani', '1.6775201612903', 3, 0.01, '9TRYP1Sg', '2019-04-15 09:13:09', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (152, 59, 'mamdani', '2.8389923329682', 4, 0.01, '9TRYP1Sg', '2019-04-15 09:13:09', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (153, 59, 'tsukamoto', '0.13253012048193', 1, 0.0055, 'Uk7wPSeZ', '2019-04-15 09:14:17', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (154, 60, 'tsukamoto', '0.19375', 2, 0.0055, 'Uk7wPSeZ', '2019-04-15 09:14:17', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (155, 57, 'mamdani', '0.25918307375845', 1, 0.0104, 'Uk7wPSeZ', '2019-04-15 09:14:17', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (156, 52, 'mamdani', '1.5658163294508', 2, 0.0104, 'Uk7wPSeZ', '2019-04-15 09:14:17', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (157, 60, 'mamdani', '1.6775201612903', 3, 0.0104, 'Uk7wPSeZ', '2019-04-15 09:14:17', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (158, 59, 'mamdani', '2.8389923329682', 4, 0.0104, 'Uk7wPSeZ', '2019-04-15 09:14:17', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (159, 59, 'tsukamoto', '0.13253012048193', 1, 0.0049, 'kc46Mdlr', '2019-04-15 09:18:40', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (160, 60, 'tsukamoto', '0.19375', 2, 0.0049, 'kc46Mdlr', '2019-04-15 09:18:40', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (161, 60, 'mamdani', '1.6775201612903', 1, 0.0044, 'kc46Mdlr', '2019-04-15 09:18:41', 3, NULL, NULL);
+INSERT INTO `log_rek` VALUES (162, 59, 'mamdani', '2.8389923329682', 2, 0.0044, 'kc46Mdlr', '2019-04-15 09:18:41', 3, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for motor
