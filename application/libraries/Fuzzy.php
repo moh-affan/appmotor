@@ -160,7 +160,6 @@ class Fuzzy
 	{
 		//fuzzyfikasi
 		$fuzzy = array();
-		self::log('fuzzyfikasi');
 		foreach ($data as $datum) {
 			foreach ($kriteria as $k) {
 				$field = array_pad(explode('_', $k), 2, '');
@@ -175,10 +174,8 @@ class Fuzzy
 				}
 			}
 		}
-		self::log($fuzzy);
 
 		//inferensi
-		self::log('inferensi');
 		$inference = array();
 		$rl = array();
 		foreach ($kriteria as $ker) {
@@ -204,6 +201,7 @@ class Fuzzy
 				}
 				$infer = new stdClass();
 				$states = [$state[0], $state[1], $state[2], $state[3], $state[4]];
+//				var_dump($states);
 //				$states = array_filter($states, function ($k) {
 //					return $k != 0;
 //				});
@@ -221,8 +219,6 @@ class Fuzzy
 				$inference[$datum->$primary][] = $infer;
 			}
 		}
-		self::log(['rules' => $rules]);
-		self::log(['inferensi' => $inference]);
 
 		//defuzzifikasi
 		$defuzzed = array();
@@ -291,23 +287,28 @@ class Fuzzy
 				}
 				$infer = new stdClass();
 				$states = [$state[0], $state[1], $state[2], $state[3], $state[4]];
+//				var_dump($states);
 //				$states = array_filter($states, function ($k) {
 //					return $k != 0;
 //				});
 
-				$alpha = count($states) <= 0 ? 0 : min($states);
-				$infer->alpha = $alpha;
-				$min = $state['range'][0];
-				$max = $state['range'][1];
-				$infer->min = $min;
-				$infer->max = $max;
-				$infer->delta = $max - $min;
-				$t = (($max - $min) * $alpha) + $min;
-				$infer->a = $t;
-				$_M = $this->calculateMoment($min, $t, $alpha);
-				$infer->_M = $_M;
-				$_A = $this->calculateArea($t, $max, $alpha);
-				$infer->_A = $_A;
+				$alpha = count($states) <= 0 ? 0 : max($states);
+				$alpha2 = count($states) <= 0 ? 0 : min($states);
+				$bb = $state['range'][0];
+				$ba = $state['range'][1];
+				$S = $ba - $bb;
+				$a1 = ($S * $alpha) + $bb;
+				$a2 = ($S * $alpha2) + $bb;
+				$T = abs(($a2 - $a1));
+				$T = ($a2 - $a1);
+				$M1 = $alpha2 / 2 * pow($a1, 2);
+				$M2 = ((1 / ($ba - $bb) / 2 * pow($a2, 3))) - ($bb / ($ba - $bb) / 2 * pow($a2, 3)) - ((1 / ($ba - $bb) / 3 * pow($a1, 3))) - ($bb / ($ba - $bb) / 2 * pow($a2, 2));
+				$M3 = ($alpha * pow($ba , 2) / 2) - ($alpha * ($ba - $bb)) / 2 * ($ba - $bb);
+				$A1 = ($a1 - $bb) * $alpha;
+				$A2 = 0.5 * ($alpha + $alpha2) * $T;
+				$A3 = ($ba - $a2) * $alpha2;
+				$infer->_M = ($M1+$M2+$M3);
+				$infer->_A = ($A1+$A2+$A3);
 				$inference[$datum->$primary][] = $infer;
 			}
 		}
@@ -344,7 +345,6 @@ class Fuzzy
 		}
 		if ($side_down == 0)
 			return 0;
-		self::log("defuzzifikasi : $side_up / $side_down");
 		return $side_up / $side_down;
 	}
 
