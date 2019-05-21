@@ -232,7 +232,8 @@ class Fuzzy
 		$x_defuzzed = array();
 		foreach ($f_defuzzed as $id => $defuzz) {
 			if (isset($data->{$id})) {
-				$motor = $data->{$id};
+				$sid = $id - 1;
+				$motor = $data->{$sid};
 				$motor->defuzzed = $defuzz;
 				$inc = strpos(strtolower(serialize($motor)), $exclude[0][1]) && strpos(strtolower(serialize($motor)), $exclude[1][1]) && strpos(strtolower(serialize($motor)), $exclude[2][1]);
 				if ($inc)
@@ -303,12 +304,12 @@ class Fuzzy
 				$T = ($a2 - $a1);
 				$M1 = $alpha2 / 2 * pow($a1, 2);
 				$M2 = ((1 / ($ba - $bb) / 2 * pow($a2, 3))) - ($bb / ($ba - $bb) / 2 * pow($a2, 3)) - ((1 / ($ba - $bb) / 3 * pow($a1, 3))) - ($bb / ($ba - $bb) / 2 * pow($a2, 2));
-				$M3 = ($alpha * pow($ba , 2) / 2) - ($alpha * ($ba - $bb)) / 2 * ($ba - $bb);
+				$M3 = ($alpha * pow($ba, 2) / 2) - ($alpha * ($ba - $bb)) / 2 * ($ba - $bb);
 				$A1 = ($a1 - $bb) * $alpha;
 				$A2 = 0.5 * ($alpha + $alpha2) * $T;
 				$A3 = ($ba - $a2) * $alpha2;
-				$infer->_M = ($M1+$M2+$M3);
-				$infer->_A = ($A1+$A2+$A3);
+				$infer->_M = ($M1 + $M2 + $M3);
+				$infer->_A = ($A1 + $A2 + $A3);
 				$inference[$datum->$primary][] = $infer;
 			}
 		}
@@ -325,7 +326,8 @@ class Fuzzy
 		$x_defuzzed = array();
 		foreach ($f_defuzzed as $id => $defuzz) {
 			if (isset($data->{$id})) {
-				$motor = $data->{$id};
+				$sid = $id - 1;
+				$motor = $data->{$sid};
 				$motor->defuzzed = $defuzz;
 				$inc = strpos(strtolower(serialize($motor)), $exclude[0][1]) && strpos(strtolower(serialize($motor)), $exclude[1][1]) && strpos(strtolower(serialize($motor)), $exclude[2][1]);
 				if ($inc)
