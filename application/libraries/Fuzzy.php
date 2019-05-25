@@ -289,12 +289,12 @@ class Fuzzy
 				$infer = new stdClass();
 				$states = [$state[0], $state[1], $state[2], $state[3], $state[4]];
 //				var_dump($states);
-//				$states = array_filter($states, function ($k) {
-//					return $k != 0;
-//				});
-
+				$states = array_filter($states, function ($k) {
+					return $k != 0 && $k != 1;
+				});
 				$alpha = count($states) <= 0 ? 0 : max($states);
 				$alpha2 = count($states) <= 0 ? 0 : min($states);
+//				self::log($datum->$primary . " [$alpha,$alpha2]");
 				$bb = $state['range'][0];
 				$ba = $state['range'][1];
 				$S = $ba - $bb;
@@ -305,9 +305,11 @@ class Fuzzy
 				$M1 = $alpha2 / 2 * pow($a1, 2);
 				$M2 = ((1 / ($ba - $bb) / 2 * pow($a2, 3))) - ($bb / ($ba - $bb) / 2 * pow($a2, 3)) - ((1 / ($ba - $bb) / 3 * pow($a1, 3))) - ($bb / ($ba - $bb) / 2 * pow($a2, 2));
 				$M3 = ($alpha * pow($ba, 2) / 2) - ($alpha * ($ba - $bb)) / 2 * ($ba - $bb);
+//				self::log($datum->$primary . " [M1 = $M1, M2 = $M2, M3 = $M3]");
 				$A1 = ($a1 - $bb) * $alpha;
 				$A2 = 0.5 * ($alpha + $alpha2) * $T;
 				$A3 = ($ba - $a2) * $alpha2;
+//				self::log($datum->$primary . " [A1 = $A1, A2 = $A2, A3 = $A3]");
 				$infer->_M = ($M1 + $M2 + $M3);
 				$infer->_A = ($A1 + $A2 + $A3);
 				$inference[$datum->$primary][] = $infer;
@@ -319,8 +321,9 @@ class Fuzzy
 		foreach ($inference as $k => $infers) {
 			$defuzzed[$k] = $this->calculateMamdaniDefuzzification($infers);
 		}
+//		self::log($defuzzed);
 		$f_defuzzed = array_filter($defuzzed, function ($k) {
-			return $k != 0;
+			return $k > 0 && $k < 1;
 		});
 		asort($f_defuzzed);
 		$x_defuzzed = array();
